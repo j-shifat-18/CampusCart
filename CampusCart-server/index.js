@@ -40,7 +40,7 @@ const client = new MongoClient(uri, {
 // Chat routes
 app.use("/chats", chatRoutes);
 
-async function run() {
+async function run(){
   try {
     await client.connect();
     const usersCollection = client.db("campusCart").collection("users");
