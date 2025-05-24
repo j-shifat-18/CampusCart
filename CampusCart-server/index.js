@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import { chatBot } from "./chatbot/chatbot.js";
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import chatRoutes from './routes/chatRoutes.js';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -15,10 +17,15 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const uri =
-  "mongodb+srv://campusCart:0QkzOXUUEGyyMILO@cluster0.psjt8aa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// MongoDB Connection URI
+const uri = process.env.MONGODB_URI || "mongodb+srv://campusCart:0QkzOXUUEGyyMILO@cluster0.psjt8aa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// MongoDB Connection
+mongoose.connect(uri)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Create a MongoClient with a MongoClientOptions object
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -27,15 +34,19 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Chat routes
+app.use('/chats', chatRoutes);
+
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-
     const usersCollection = client.db("campusCart").collection("users");
     const productsCollection = client.db("campusCart").collection("products");
     const chatsCollection = client.db("campusCart").collection("chats");
+    const reviewsCollection = client.db("campusCart").collection("reviews");
+    const wishlistsCollection = client.db("campusCart").collection("wishlists");
 
+    // User routes
     app.get("/users", async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
@@ -56,10 +67,29 @@ async function run() {
       res.json(result);
     });
 
+    app.post("/users", async (req, res) => {
+      const userData = req.body;
+      const result = await usersCollection.insertOne(userData);
+      res.send(result);
+    });
+
+    app.patch("/updateprofile/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateProfile = req.body;
+      const updateDoc = {
+        $set: updateProfile,
+      };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
+    // Product routes
     app.get("/products", async (req, res) => {
       const result = await productsCollection.find().toArray();
       res.send(result);
     });
+
 
     // GET /products?university=IUT
     // app.get("/products", async (req, res) => {
@@ -77,6 +107,67 @@ async function run() {
     //   res.send(posts);
     // });
 
+    // New search and filter endpoints
+    app.get("/products/search", async (req, res) => {
+      try {
+        const { query, category, minPrice, maxPrice, condition, sortBy } = req.query;
+        let filter = {};
+
+        // Text search
+        if (query) {
+          filter.$or = [
+            { name: { $regex: query, $options: 'i' } },
+            { description: { $regex: query, $options: 'i' } }
+          ];
+        }
+
+        // Category filter
+        if (category) {
+          filter.category = category;
+        }
+
+        // Price range filter
+        if (minPrice || maxPrice) {
+          filter.price = {};
+          if (minPrice) filter.price.$gte = parseFloat(minPrice);
+          if (maxPrice) filter.price.$lte = parseFloat(maxPrice);
+        }
+
+        // Condition filter
+        if (condition) {
+          filter.condition = condition;
+        }
+
+        // Sorting
+        let sort = {};
+        if (sortBy === 'price_asc') sort = { price: 1 };
+        else if (sortBy === 'price_desc') sort = { price: -1 };
+        else if (sortBy === 'newest') sort = { createdAt: -1 };
+        else sort = { createdAt: -1 }; // Default sort by newest
+
+        const result = await productsCollection
+          .find(filter)
+          .sort(sort)
+          .toArray();
+
+        res.json(result);
+      } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).send('Error searching products');
+      }
+    });
+
+    app.get("/products/categories", async (req, res) => {
+      try {
+        const categories = await productsCollection.distinct("category");
+        res.json(categories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).send('Error fetching categories');
+      }
+    });
+
+
     app.get("/products/featuredProducts", async (req, res) => {
       const result = await productsCollection
         .aggregate([{ $limit: 6 }])
@@ -91,17 +182,12 @@ async function run() {
       res.send(result);
     });
 
-    app.post("/users", async (req, res) => {
-      const userData = req.body;
-      const result = await usersCollection.insertOne(userData);
-      res.send(result);
-    });
-
     app.post("/products", async (req, res) => {
       const productData = req.body;
       const result = await productsCollection.insertOne(productData);
       res.send(result);
     });
+
 
     app.patch("/updateProduct/:id", async (req, res) => {
       const id = req.params.id;
@@ -236,17 +322,21 @@ async function run() {
       }
     });
 
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
-  }
-}
-run().catch(console.dir);
+    // Chatbot routes
+    app.post('/chatbot', async (req, res) => {
+      try {
+        const { message } = req.body;
+        if (!message) {
+          return res.status(400).send('Message is required');
+        }
+        const response = await chatBot(message);
+        res.json(response);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Error occurred');
+      }
+    });
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -262,8 +352,182 @@ app.post("/chatbot", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error occurred");
+    // Rating and Review endpoints
+    app.post("/reviews", async (req, res) => {
+      try {
+        const { userId, productId, rating, comment } = req.body;
+
+        // Validate rating
+        if (rating < 1 || rating > 5) {
+          return res.status(400).send('Rating must be between 1 and 5');
+        }
+
+        const review = {
+          userId,
+          productId,
+          rating,
+          comment,
+          createdAt: new Date()
+        };
+
+        const result = await reviewsCollection.insertOne(review);
+
+        // Update product average rating
+        const productReviews = await reviewsCollection.find({ productId }).toArray();
+        const avgRating = productReviews.reduce((acc, curr) => acc + curr.rating, 0) / productReviews.length;
+
+        await productsCollection.updateOne(
+          { _id: new ObjectId(productId) },
+          { $set: { averageRating: avgRating, totalReviews: productReviews.length } }
+        );
+
+        res.json({ ...review, _id: result.insertedId });
+      } catch (error) {
+        console.error('Error creating review:', error);
+        res.status(500).send('Error creating review');
+      }
+    });
+
+    app.get("/reviews/product/:productId", async (req, res) => {
+      try {
+        const { productId } = req.params;
+        const reviews = await reviewsCollection
+          .aggregate([
+            { $match: { productId } },
+            {
+              $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user"
+              }
+            },
+            { $unwind: "$user" },
+            {
+              $project: {
+                _id: 1,
+                rating: 1,
+                comment: 1,
+                createdAt: 1,
+                "user.name": 1,
+                "user.email": 1
+              }
+            }
+          ])
+          .toArray();
+
+        res.json(reviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+        res.status(500).send('Error fetching reviews');
+      }
+    });
+
+    app.get("/reviews/user/:userId", async (req, res) => {
+      try {
+        const { userId } = req.params;
+        const reviews = await reviewsCollection
+          .find({ userId })
+          .toArray();
+
+        res.json(reviews);
+      } catch (error) {
+        console.error('Error fetching user reviews:', error);
+        res.status(500).send('Error fetching user reviews');
+      }
+    });
+
+    // Wishlist endpoints
+    app.post("/wishlist", async (req, res) => {
+      try {
+        const { userId, productId } = req.body;
+
+        // Check if product exists
+        const product = await productsCollection.findOne({ _id: new ObjectId(productId) });
+        if (!product) {
+          return res.status(404).send('Product not found');
+        }
+
+        // Check if already in wishlist
+        const existingWishlist = await wishlistsCollection.findOne({ userId, productId });
+        if (existingWishlist) {
+          return res.status(400).send('Product already in wishlist');
+        }
+
+        const wishlistItem = {
+          userId,
+          productId,
+          addedAt: new Date()
+        };
+
+        const result = await wishlistsCollection.insertOne(wishlistItem);
+        res.json({ ...wishlistItem, _id: result.insertedId });
+      } catch (error) {
+        console.error('Error adding to wishlist:', error);
+        res.status(500).send('Error adding to wishlist');
+      }
+    });
+
+    app.delete("/wishlist/:userId/:productId", async (req, res) => {
+      try {
+        const { userId, productId } = req.params;
+        const result = await wishlistsCollection.deleteOne({ userId, productId });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).send('Wishlist item not found');
+        }
+
+        res.json({ message: 'Removed from wishlist' });
+      } catch (error) {
+        console.error('Error removing from wishlist:', error);
+        res.status(500).send('Error removing from wishlist');
+      }
+    });
+
+    app.get("/wishlist/:userId", async (req, res) => {
+      try {
+        const { userId } = req.params;
+        const wishlist = await wishlistsCollection
+          .aggregate([
+            { $match: { userId } },
+            {
+              $lookup: {
+                from: "products",
+                localField: "productId",
+                foreignField: "_id",
+                as: "product"
+              }
+            },
+            { $unwind: "$product" },
+            {
+              $project: {
+                _id: 1,
+                addedAt: 1,
+                "product._id": 1,
+                "product.name": 1,
+                "product.price": 1,
+                "product.image": 1,
+                "product.description": 1
+              }
+            }
+          ])
+          .toArray();
+
+        res.json(wishlist);
+      } catch (error) {
+        console.error('Error fetching wishlist:', error);
+        res.status(500).send('Error fetching wishlist');
+      }
+    });
+
+    await client.db("admin").command({ ping: 1 });
+    console.log("Successfully connected to MongoDB!");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+
   }
-});
+}
+
 
 app.get("/chatbotImage", async (req, res) => {
   try {
@@ -277,8 +541,14 @@ app.get("/chatbotImage", async (req, res) => {
     console.error(error);
     res.status(500).send("Error occurred");
   }
+
+run().catch(console.dir);
+
+app.get("/", (req, res) => {
+  res.send("CampusCart API is running!");
+
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
