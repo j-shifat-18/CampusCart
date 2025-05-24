@@ -11,7 +11,7 @@ import ErrorPage from "../Components/Error/ErrorPage";
 import CardDetails from "../Components/CardDetails/CardDetails";
 import UpdateTask from "../Components/UpdateTask/UpdateTask";
 import Loading from "../Components/Loading/Loading";
-
+import UpdateProfile from "../Components/UpdateProfile/UpdateProfile";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +47,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CardDetails></CardDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/updateProfile",
+        element: (
+          <PrivateRoute>
+            <UpdateProfile></UpdateProfile>
           </PrivateRoute>
         ),
       },
