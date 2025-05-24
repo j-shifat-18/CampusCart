@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import OpenAI from 'openai';
 dotenv.config();
 
-const apikey=process.env.V3_DEEPSEEK;
+const apikey=process.env.V4_DEEPSEEK;
 
 
 const openai = new OpenAI({

@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.get('/chatbot', async (req, res) => {
   try {
-    const response = await chatBot("What is the best product for a senior year student for his birthday?");
+    const response = await chatBot("What is the best product for a sophomore year student for his birthday?");
         res.send(response);
   } catch (error) {
     // console.error(error);
