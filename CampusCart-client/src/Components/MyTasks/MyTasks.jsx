@@ -9,8 +9,8 @@ const MyTasks = () => {
   const { user } = use(AuthContext);
   const data = useLoaderData();
 
-  const myTasks = data.filter((task) => task.userEmail === user.email);
-  const [myTotalTasks, setMyTotalTasks] = useState(myTasks);
+  const products = data.filter((product) => product.userEmail === user.email);
+  const [myProducts, setMyProducts] = useState(products);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -23,15 +23,15 @@ const MyTasks = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://freelancing-marketplace-server.vercel.app/tasks/${id}`, {
+        fetch(`http://localhost:3000/products/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
 
-              const remainignTasks = myTotalTasks.filter(task => task._id != id);
-              setMyTotalTasks(remainignTasks);
+              const remainignTasks = myProducts.filter(task => task._id != id);
+              setMyProducts(remainignTasks);
 
               Swal.fire({
                 title: "Deleted!",
@@ -52,13 +52,13 @@ const MyTasks = () => {
           <tr>
             <th>Category</th>
             <th>Title</th>
-            <th>Deadline</th>
+            <th>Price</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {myTotalTasks.map((task) => (
-            <MyTaskCard key={task._id} handleDelete={handleDelete} task={task}></MyTaskCard>
+          {myProducts.map((product) => (
+            <MyTaskCard key={product._id} handleDelete={handleDelete} product={product}></MyTaskCard>
           ))}
         </tbody>
       </table>

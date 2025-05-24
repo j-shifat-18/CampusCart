@@ -11,7 +11,7 @@ const FreelancerAnimation = () => {
         </h2>
         <h4 className="mb-5 text-xl font-medium text-slate-600">Turn your ideas into impactful, user-focused digital solutions that shine.</h4>
         <p className="text-lg text-slate-600">
-          At Work<span className="text-primary">lify</span>, we believe in turning creativity into results. Whether you're launching a new product, building a web platform, or enhancing your app's design, our team is here to guide you through every step. With intuitive tools, collaborative workflows, and a passion for quality, we help bring your vision to life—efficiently and beautifully. Experience a process that’s built around your goals, your audience, and your future.
+          At Campus<span className="text-primary">Cart</span>, we believe in turning creativity into results. Whether you're launching a new product, building a web platform, or enhancing your app's design, our team is here to guide you through every step. With intuitive tools, collaborative workflows, and a passion for quality, we help bring your vision to life—efficiently and beautifully. Experience a process that’s built around your goals, your audience, and your future.
         </p>
       </div>
       <div>

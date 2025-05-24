@@ -3,13 +3,8 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
 import { toast, ToastContainer } from "react-toastify";
 
-
 const AddTask = () => {
-
   const { user } = use(AuthContext);
-
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +13,11 @@ const AddTask = () => {
     const title = form.title.value;
     const category = form.category.value;
     const description = form.description.value;
-    const thumbnail=form.thumbnail.value;
-    const visibility=form.visibility.value;
-    const payment=form.payment.value;
+    const thumbnail = form.thumbnail.value;
+    const visibility = form.visibility.value;
+    const pricing = form.pricing.value;
     const price = form.price.value;
+    const university = form.university.value;
 
     const userData = {
       title,
@@ -30,11 +26,11 @@ const AddTask = () => {
       thumbnail,
       price,
       visibility,
-      payment,
+      pricing,
+      university,
       userEmail: user.email,
       userName: user.displayName,
       photoURL: user.photoURL,
-      
     };
 
     // add task to the db
@@ -47,13 +43,10 @@ const AddTask = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.insertedId){
-            toast.success("Product added successfully")
+        if (data.insertedId) {
+          toast.success("Product added successfully");
         }
-        
       });
-
-    
   };
   return (
     <div className="min-h-screen p-6 bg-base-200 flex items-center justify-center pb-28">
@@ -62,19 +55,19 @@ const AddTask = () => {
       </Helmet>
 
       <div className="w-full max-w-2xl p-8 bg-white rounded shadow-lg shadow-primary">
-        <h2 className="text-2xl font-bold text-center mb-6">Sell Your Stuff </h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Sell Your Stuff{" "}
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-           <div>
+          <div>
             <label className="block font-semibold">Category</label>
             <select
               name="category"
               required
               className="select select-bordered w-full"
             >
-              <option value="">
-                Select a category
-              </option>
+              <option value="">Select a category</option>
               <option value="Book">Book</option>
               <option value="Electronics">Electronics</option>
               <option value="Stationary">Stationary</option>
@@ -105,9 +98,6 @@ const AddTask = () => {
             ></textarea>
           </div>
 
-          
-
-
           <div>
             <label className="block font-semibold">Product Photo URL</label>
             <input
@@ -120,16 +110,15 @@ const AddTask = () => {
           </div>
 
           <div>
-            <label className="block font-semibold">Payment Option</label>
+            <label className="block font-semibold">Pricing Option</label>
             <select
-              name="payment"
+              name="pricing"
               required
               className="select select-bordered w-full"
             >
-              <option value="">
-                Select a Option
-              </option>
-              <option value="Cash on Delivery">Cash on Delivery</option>
+              <option value="">Select a Option</option>
+              <option value="Fixed Price">Fixed Price</option>
+              <option value="Allow Bidding">Allow Bidding</option>
               <option value="Monthly Subscription">Monthly Subscription</option>
             </select>
           </div>
@@ -146,18 +135,39 @@ const AddTask = () => {
             />
           </div>
 
-           <div>
+          <div>
             <label className="block font-semibold">Visibility</label>
             <select
               name="visibility"
               required
               className="select select-bordered w-full"
             >
-              <option value="">
-                Select a Option
+              <option value="">public</option>
+              <option value="Own University Student">
+                public
               </option>
-              <option value="Own University Student">Own University Student</option>
-              <option value="All registered Student">All registered Student</option>
+              <option value="university-only">
+                university-only
+              </option>
+            </select>
+          </div>
+
+          {/* University */}
+          <div>
+            <label className="block font-semibold">Your University</label>
+            <select
+              name="university"
+              required
+              className="select select-bordered w-full"
+            >
+              <option value="">Select a Option</option>
+              <option value="Islamic University of Technology">
+                Islamic University of Technology
+              </option>
+              <option value="Dhaka University">Dhaka University</option>
+              <option value="BUET">BUET</option>
+              <option value="DMC">DMC</option>
+              <option value="AUST">AUST</option>
             </select>
           </div>
 

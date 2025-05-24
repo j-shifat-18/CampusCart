@@ -8,7 +8,6 @@ import { useEffect } from "react";
 const UpdateUserProfile = () => {
   const { user, updateUserInfo, setUser } = useContext(AuthContext);
   const [userId, setUserId] = useState(null);
-  
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -125,15 +124,23 @@ const UpdateUserProfile = () => {
             </div>
 
             {/* University */}
+            {/* University */}
             <div>
-              <label className="label font-semibold">University</label>
-              <input
+              <label className="label font-semibold">university</label>
+              <select
                 name="university"
-                type="text"
-                placeholder="Enter your university"
-                className="input bg-base-300 border-none w-full"
                 required
-              />
+                className="input bg-base-300 border-none w-full"
+              >
+                <option value="">Select a Option</option>
+                <option value="Islamic University of Technology">
+                  Islamic University of Technology
+                </option>
+                <option value="Dhaka University">Dhaka University</option>
+                <option value="BUET">BUET</option>
+                <option value="DMC">DMC</option>
+                <option value="AUST">AUST</option>
+              </select>
             </div>
             {/* Department */}
             <div>

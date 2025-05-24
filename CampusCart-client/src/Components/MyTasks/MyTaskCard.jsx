@@ -4,24 +4,24 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const MyTaskCard = ({ task ,handleDelete }) => {
-  const { thumbnail, title, deadline, category, _id, bids } = task;
-  const formattedDeadline = new Date(deadline).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
+const MyTaskCard = ({ product ,handleDelete }) => {
+  const { thumbnail, title, category, _id , price} = product;
+  // const formattedDeadline = new Date(deadline).toLocaleString("en-US", {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  //   hour: "numeric",
+  //   minute: "2-digit",
+  //   hour12: true,
+  // });
 
 
-  const showBids = () => {
-    Swal.fire({
-      title: `📨 Total ${bids} Bids Received`,
-      text: `This task has received ${bids} bids from interested freelancers.`,
-    });
-  };
+  // const showBids = () => {
+  //   Swal.fire({
+  //     title: `📨 Total ${bids} Bids Received`,
+  //     text: `This task has received ${bids} bids from interested freelancers.`,
+  //   });
+  // };
   return (
     <tr>
       <td>
@@ -44,14 +44,17 @@ const MyTaskCard = ({ task ,handleDelete }) => {
         </span>
       </td>
       <td>
-        <span className="bg-primary text-white py-1 px-3 rounded-full">
+        {/* <span className="bg-primary text-white py-1 px-3 rounded-full">
           {formattedDeadline}
+        </span> */}
+        <span className="bg-primary text-white py-1 px-3 rounded-full">
+          $ {price}
         </span>
       </td>
       <th>
         <div className="flex items-center h-full gap-3">
           <Link
-            to={`/updateTask/${_id}`}
+            to={`/updateProduct/${_id}`}
             className="btn btn-outline btn-sm btn-primary"
           >
             <FaRegEdit size={18} />
@@ -62,12 +65,12 @@ const MyTaskCard = ({ task ,handleDelete }) => {
           >
             <MdDelete size={18} />
           </button>
-          <button
+          {/* <button
             onClick={showBids}
             className="btn btn-outline btn-sm btn-primary text-base"
           >
             Bids
-          </button>
+          </button> */}
         </div>
       </th>
     </tr>
