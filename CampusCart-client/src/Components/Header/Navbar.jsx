@@ -1,23 +1,21 @@
-import React, { use, useState } from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
 import "./Navbar.css";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
 import logo from "../../assets/logo.png";
-import AdminPanel from "../AdminPanel/AdminPanel";
-import Loading from "../Loading/Loading";
 const Navbar = () => {
-  const { user, logOutUser, loading } = use(AuthContext);
+  const { user, logOutUser } = use(AuthContext);
 
   let admin = false;
 
   console.log(user);
 
   if (
-    user?.email == "sifatjahirul@gmial.com" ||
-    user?.email == "muhaiminulhasan@gmai.com" ||
-    user?.email == "safwansatil@gmail.com"
+    user?.email == "sifatjahirul2@gmial.edu" ||
+    user?.email == "muhaiminulhasan2@gmail.edu" ||
+    user?.email == "safwansatil2@gmail.edu"
   ) {
     admin = true;
   }

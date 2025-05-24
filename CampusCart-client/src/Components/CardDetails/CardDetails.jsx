@@ -34,36 +34,36 @@ const CardDetails = () => {
   // Get current user ID from localStorage or your auth context
   const currentUserId = localStorage.getItem('userId'); // Adjust based on your auth implementation
 
-  const handleCountBid = (id) => {
-    // let convertedBidCount = parseInt(bidCount);
-    // convertedBidCount++;
+  // const handleCountBid = (id) => {
+  //   // let convertedBidCount = parseInt(bidCount);
+  //   // convertedBidCount++;
 
-    // const updatedBids = { bids: convertedBidCount };
+  //   // const updatedBids = { bids: convertedBidCount };
 
-    fetch(
-      `https://freelancing-marketplace-server.vercel.app/updateTask/${id}`
-      //    {
-      //   method: "PATCH",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify(updatedBids),
-      // }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        // toast.info(`🦄 You Bid for ${convertedBidCount} opportunities! `, {
-        //   position: "top-center",
-        //   autoClose: 2000,
-        //   closeOnClick: false,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
-        // setBidcount(convertedBidCount);
-        console.log(data);
-      });
-  };
+  //   fetch(
+  //     `https://freelancing-marketplace-server.vercel.app/updateTask/${id}`
+  //     //    {
+  //     //   method: "PATCH",
+  //     //   headers: {
+  //     //     "content-type": "application/json",
+  //     //   },
+  //     //   body: JSON.stringify(updatedBids),
+  //     // }
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // toast.info(`🦄 You Bid for ${convertedBidCount} opportunities! `, {
+  //       //   position: "top-center",
+  //       //   autoClose: 2000,
+  //       //   closeOnClick: false,
+  //       //   pauseOnHover: true,
+  //       //   draggable: true,
+  //       //   progress: undefined,
+  //       // });
+  //       // setBidcount(convertedBidCount);
+  //       console.log(data);
+  //     });
+  // };
 
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md shadow-primary p-5 space-y-4 my-24">
@@ -119,7 +119,7 @@ const CardDetails = () => {
       {/* Buttons */}
       <div className="flex gap-4">
         <button
-          onClick={() => handleCountBid(_id)}
+          // onClick={() => handleCountBid(_id)}
           className="flex-1 btn btn-outline btn-primary font-medium text-xl"
         >
           Buy Now

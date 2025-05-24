@@ -19,7 +19,13 @@ const Register = () => {
     const university = e.target.university.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const eduEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.edu$/;
     const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+    if (!eduEmailRegex.test(email)) {
+    setError("Only .edu email addresses are allowed");
+    return;
+  }
 
     if (passwordRegEx.test(password) === false) {
       setError(

@@ -1,10 +1,46 @@
+import { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { Link, useLoaderData } from "react-router";
-
+import { Link, useLoaderData, useSearchParams } from "react-router";
+import Swal from "sweetalert2";
 
 const AdminPanel = () => {
-  const users = useLoaderData();
+  const usersData = useLoaderData();
+
+  const [users , setUsers] = useState(usersData);
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#6A5ACD",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/users/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              const remainignTasks = users.filter(
+                (task) => task._id != id
+              );
+              setUsers(remainignTasks);
+
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+      }
+    });
+  };
   return (
     <table className="table">
       <thead>
