@@ -16,7 +16,7 @@ async function chatbotImage(path) {
     model: "gemini-2.0-flash",
     contents: createUserContent([
         createPartFromUri(myfile.uri, myfile.mimeType),
-        "Analyse this product of the image, provide a brief description and pros and cons of buyying it, within 3 to 5 lines",
+        "Analyse this product of the image, provide a brief description and pros and cons of buying it, within 3 to 5 lines",
     ]),
     });
     console.log(response.text);
