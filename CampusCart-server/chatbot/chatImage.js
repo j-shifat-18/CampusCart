@@ -2,36 +2,60 @@ import OpenAI from 'openai';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
-const apikey=process.env.V5_IMAGE;
-console.log('DEEPSEEK_API_KEY:', apikey);
+const apikey = process.env.V5_IMAGE;
+if (!apikey) {
+  console.error('V5_IMAGE API key is not set in environment variables');
+}
 
 const openai = new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: apikey,
-//   defaultHeaders: {
-//     "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
-//     "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
-//   },
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: apikey,
+  defaultHeaders: {
+    "HTTP-Referer": "http://localhost:3000",
+    "X-Title": "CampusCart",
+  },
 });
 
 async function chatBotImage(imageUrl, prompt) {
-  const completion = await openai.chat.completions.create({
-    model: "google/gemma-3n-e4b-it:free",
-    messages: [
-      {
-        "role": "user",
-        "content": [
-            {"type": "image", "url": imageUrl},
-            {"type": "text", "text": prompt}
-        ]
-      }
-    ],
-    
-  });
+  try {
+    if (!imageUrl || !prompt) {
+      throw new Error('Image URL and prompt are required');
+    }
 
-  console.log(completion.choices[0].message);
-  return completion.choices[0].message;
+    const completion = await openai.chat.completions.create({
+      model: "anthropic/claude-3-opus:beta",
+      messages: [
+        {
+          "role": "system",
+          "content": "You are a helpful assistant that analyzes images and provides relevant suggestions and information. Be concise and specific in your responses."
+        },
+        {
+          "role": "user",
+          "content": [
+            { "type": "image", "url": imageUrl },
+            { "type": "text", "text": prompt }
+          ]
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 500,
+    });
+
+    if (!completion.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response from AI model');
+    }
+
+    return {
+      success: true,
+      content: completion.choices[0].message.content
+    };
+  } catch (error) {
+    console.error('Error in chatBotImage:', error);
+    return {
+      success: false,
+      error: error.message || 'DO whatever you want, but I encountered an error processing the image.'
+    };
+  }
 }
 
-export {chatBotImage};
+export { chatBotImage };
