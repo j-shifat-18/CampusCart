@@ -526,7 +526,7 @@ app.post("/chatbot", async (req, res) => {
     console.error("Error connecting to MongoDB:", error);
 
   }
-}
+},
 
 
 app.get("/chatbotImage", async (req, res) => {
@@ -551,4 +551,4 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-});
+})

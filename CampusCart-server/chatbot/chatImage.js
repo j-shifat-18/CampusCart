@@ -27,7 +27,7 @@ async function chatBotImage(imageUrl, prompt) {
       messages: [
         {
           "role": "system",
-          "content": "You are a helpful assistant that analyzes images and provides relevant suggestions and information. Be concise and specific in your responses."
+          "content": "You are a shopping assistant for CampusCart. Help students with their shopping journey. Try to be concise but resourceful"
         },
         {
           "role": "user",
