@@ -20,25 +20,28 @@ async function chatbotImage(path) {
     ]),
     });
     console.log(response.text);
+    return response.text;
 }
 
-await chatbotImage();
+// await chatbotImage();
 
 
 
 
 async function chatBot(prompt) {
+    const textPart = { text: prompt}
     const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: createUserContent([prompt]), 
-    config: {
-      systemInstruction: "You are an assistant that helps users to find the best products for their needs. You should answer briefly and concisely",
+        model: "gemini-2.0-flash",
+        contents: createUserContent([textPart]), 
+        config: {
+        systemInstruction: "You are an assistant that helps users to find the best products for their needs. You should answer briefly and concisely",
     },
-  });
-  console.log(response.text);
+    });
+    console.log(response.text);
+    return response.text;
 }
 
-await chatBot();
+// await chatBot();
 
 
 export {chatbotImage, chatBot};
