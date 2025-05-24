@@ -10,3 +10,10 @@
   --color-primary: #6A5ACD;
   --color-secondary: #F7FAFF;
 }
+
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  --color-primary: #8A79FF;    /* Slightly brighter shade of your primary */
+  --color-secondary: #1A1A2E;  /* Dark navy/blue-black for background */
+}

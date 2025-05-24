@@ -21,7 +21,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // loader: () => fetch("https://freelancing-marketplace-server.vercel.app/tasks/featuredTasks"),
+        loader: () => fetch("http://localhost:3000/products/featuredProducts"),
         hydrateFallbackElement: <Loading></Loading>,
         element: <Home></Home>,
       },

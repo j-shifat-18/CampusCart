@@ -2,23 +2,21 @@ import React from "react";
 import TaskCard from "../TaskCard/TaskCard";
 import { BsFillHeartbreakFill } from "react-icons/bs";
 
-const FeaturedTasks = ({ featuredTasks }) => {
+const FeaturedTasks = ({ featuredProducts }) => {
   return (
     <div className="my-24">
       <div className="text-center max-w-3/5 mx-auto space-y-4 mb-10">
-        <h2 className="font-extrabold text-4xl ">Featured <span className="text-primary">Tasks</span></h2>
+        <h2 className="font-extrabold text-4xl ">Featured <span className="text-primary">Products</span></h2>
         <p className="text-slate-700">
-          Explore high-quality, handpicked tasks from trusted clients. These
-          top-rated opportunities are selected based on budget, clarity, and
-          relevance — perfect for freelancers ready to make an impact.
+          Discover top picks from our student community! Handpicked for quality, value, and popularity, these featured items showcase the best of what your fellow students are offering. From textbooks and gadgets to handmade crafts and dorm essentials — grab these deals before they’re gone!
         </p>
       </div>
       {/* cards */}
       <div>
-        {featuredTasks.length > 0 ? (
+        {featuredProducts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-24 gap-12 justify-items-center">
-            {featuredTasks.map((task) => (
-              <TaskCard key={task._id} task={task}></TaskCard>
+            {featuredProducts.map((product) => (
+              <TaskCard key={product._id} product={product}></TaskCard>
             ))}
           </div>
         ) : (

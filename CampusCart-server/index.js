@@ -1,6 +1,10 @@
-const express = require("express");
-const cors = require("cors");
+import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import { chatBot } from "./chatbot/chatbot.js";
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,9 +40,6 @@ async function run() {
       res.send(result);
     });
 
-
-    
-
     app.get("/updateprofile/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -60,14 +61,19 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/products/featuredProducts", async (req, res) => {
+      const result = await productsCollection
+        .aggregate([{ $limit: 6 }])
+        .toArray();
+      res.send(result);
+    });
+
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await productsCollection.findOne(query);
       res.send(result);
     });
-
-    
 
     app.post("/users", async (req, res) => {
       const userData = req.body;
@@ -81,10 +87,7 @@ async function run() {
       res.send(result);
     });
 
-
-
-
-      app.patch("/updateprofile/:id", async (req, res) => {
+    app.patch("/updateprofile/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const updateProfile = req.body;
@@ -106,6 +109,10 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+
+
+  
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

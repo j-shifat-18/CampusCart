@@ -4,15 +4,17 @@ import { useLoaderData } from 'react-router';
 import Banner from '../Banner/Banner';
 import FreelancerAnimation from '../Animation/FreelancerAnimation';
 import Reviews from '../Reviews/Reviews';
+import Chatbot from '../Chatbot/Chatbot';
 
 const Home = () => {
-    const featuredTasks = useLoaderData();
+    const featuredProducts = useLoaderData();
     return (
-        <div>
+        <div className='relative'>
             <Banner></Banner>
             <FreelancerAnimation ></FreelancerAnimation>
-            {/* <FeaturedTasks featuredTasks={featuredTasks}></FeaturedTasks> */}
+            <FeaturedTasks featuredProducts={featuredProducts}></FeaturedTasks>
             <Reviews></Reviews>
+            <Chatbot></Chatbot>
         </div>
     );
 };
