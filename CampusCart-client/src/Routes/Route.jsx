@@ -11,7 +11,7 @@ import ErrorPage from "../Components/Error/ErrorPage";
 import CardDetails from "../Components/CardDetails/CardDetails";
 import UpdateTask from "../Components/UpdateTask/UpdateTask";
 import Loading from "../Components/Loading/Loading";
-import UpdateProfile from "../Components/UpdateProfile/UpdateProfile";
+import UpdateUserProfile from "../Components/UpdateUserInfo/UpdateUserInfo";
 
 export const router = createBrowserRouter([
   {
