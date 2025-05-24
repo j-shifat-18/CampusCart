@@ -13,6 +13,7 @@
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.13.0",
     "@tailwindcss/vite": "^4.1.7",
+    "date-fns": "^4.1.0",
     "firebase": "^11.8.1",
     "lottie-react": "^2.4.1",
     "react": "^19.1.0",
