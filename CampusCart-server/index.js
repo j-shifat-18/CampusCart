@@ -1,21 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-
 // campusCart
 // /0QkzOXUUEGyyMILO
-
 
 app.use(cors());
 app.use(express.json());
 
-
-
-const uri = "mongodb+srv://campusCart:0QkzOXUUEGyyMILO@cluster0.psjt8aa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri =
+  "mongodb+srv://campusCart:0QkzOXUUEGyyMILO@cluster0.psjt8aa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -23,7 +20,7 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
@@ -36,17 +33,32 @@ async function run() {
 
     app.get("/users", async (req, res) => {
       const result = await usersCollection.find().toArray();
-
       res.send(result);
+    });
+
+
+    
+
+    app.get("/updateprofile/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await usersCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.get("/users/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email: email };
+      const result = await usersCollection.findOne(query);
+      console.log(result);
+      res.json(result);
     });
 
     app.get("/products", async (req, res) => {
       const result = await productsCollection.find().toArray();
-     
+
       res.send(result);
     });
-
-
 
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
@@ -55,6 +67,7 @@ async function run() {
       res.send(result);
     });
 
+    
 
     app.post("/users", async (req, res) => {
       const userData = req.body;
@@ -71,9 +84,22 @@ async function run() {
 
 
 
+      app.patch("/updateprofile/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateProfile = req.body;
+      const updateDoc = {
+        $set: updateProfile,
+      };
+      const result = await usersCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
@@ -81,13 +107,10 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
