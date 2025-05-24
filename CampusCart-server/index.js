@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from "express";
 import cors from "cors";
-import { chatBot } from "./chatbot/chatbot.js";
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+// import { chatBot } from "./chatbot/chatbot.js";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
 dotenv.config();
 
@@ -112,7 +112,7 @@ run().catch(console.dir);
 
 
 
-  
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
