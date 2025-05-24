@@ -5,61 +5,56 @@ import { useLoaderData } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 
 const CardDetails = () => {
-  const taskData = useLoaderData();
+  const productData = useLoaderData();
   const {
     thumbnail,
     userName,
     userEmail,
-    budget,
-    deadline,
+    price,
     description,
     category,
     title,
-    createdAt,
-    bids,
+    // createdAt,
+    // bids,
     _id,
-  } = taskData;
+  } = productData;
 
-  const localTime = new Date(createdAt).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const formattedDeadline = new Date(deadline).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
+  // const localTime = new Date(createdAt).toLocaleString("en-US", {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // });
 
-  const [bidCount, setBidcount] = useState(bids);
+  // const [bidCount, setBidcount] = useState(bids);
 
   const handleCountBid = (id) => {
-    let convertedBidCount = parseInt(bidCount);
-    convertedBidCount++;
+    // let convertedBidCount = parseInt(bidCount);
+    // convertedBidCount++;
 
-    const updatedBids = { bids: convertedBidCount };
+    // const updatedBids = { bids: convertedBidCount };
 
-    fetch(`https://freelancing-marketplace-server.vercel.app/updateTask/${id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedBids),
-    })
+    fetch(
+      `https://freelancing-marketplace-server.vercel.app/updateTask/${id}`
+      //    {
+      //   method: "PATCH",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(updatedBids),
+      // }
+    )
       .then((res) => res.json())
-      .then(() => {
-        toast.info(`🦄 You Bid for ${convertedBidCount} opportunities! `, {
-          position: "top-center",
-          autoClose: 2000,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        setBidcount(convertedBidCount);
+      .then((data) => {
+        // toast.info(`🦄 You Bid for ${convertedBidCount} opportunities! `, {
+        //   position: "top-center",
+        //   autoClose: 2000,
+        //   closeOnClick: false,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
+        // setBidcount(convertedBidCount);
+        console.log(data);
       });
   };
 
@@ -72,7 +67,7 @@ const CardDetails = () => {
           <div className="flex items-center text-sm text-gray-500 space-x-4 mt-1">
             <div className="flex items-center gap-1">
               <FaClock />
-              <span>{localTime}</span>
+              {/* <span>{localTime}</span> */}
             </div>
             <div className="flex items-center gap-1">
               <FaUser />
@@ -91,9 +86,9 @@ const CardDetails = () => {
         <span className="bg-secondary text-sm px-3 py-2 rounded-full">
           #{category}
         </span>
-        <span className="bg-primary text-white text-sm px-3 py-2 rounded-full">
+        {/* <span className="bg-primary text-white text-sm px-3 py-2 rounded-full">
           Deadline: {formattedDeadline}
-        </span>
+        </span> */}
       </div>
 
       {/* Thumbnail */}
@@ -105,16 +100,13 @@ const CardDetails = () => {
 
       {/* Footer */}
       <div className="flex justify-between items-center border-t border-primary pt-3">
-        <p className="text-lg">
-          Proposals: <span className="font-semibold">{bidCount}</span>
-        </p>
+        <div className="flex items-center gap-2">
+          <MdEmail size={20} />
+          <span>{userEmail}</span>
+        </div>
         <p className="text-lg font-semibold text-gray-800">
-          ${budget} <span className="text-gray-500">Hourly rate</span>
+          ${price} <span className="text-gray-500">Hourly rate</span>
         </p>
-      </div>
-      <div className="flex items-center gap-2">
-        <MdEmail size={20} />
-        <span>{userEmail}</span>
       </div>
 
       {/* Button */}
@@ -122,7 +114,7 @@ const CardDetails = () => {
         onClick={() => handleCountBid(_id)}
         className="w-full btn btn-outline btn-primary font-medium text-xl"
       >
-        Bid Now
+        Buy Now
       </button>
       <ToastContainer></ToastContainer>
     </div>

@@ -20,10 +20,10 @@ const MainLayout = () => {
     }
   }, [location]);
 
-//       const { loading } = use(AuthContext);
-//   if (loading) {
-//     return <Loading></Loading>;
-//   }
+      const { loading } = use(AuthContext);
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   
   return (

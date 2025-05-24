@@ -7,17 +7,17 @@ import { Tooltip } from "react-tooltip";
 import logo from "../../assets/logo.png";
 
 const Navbar = () => {
-//   const { user, logOutUser } = use(AuthContext);
+  const { user, logOutUser } = use(AuthContext);
   const links = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/addTask">Add Task</NavLink>
+        <NavLink to="/addListing">Add Listing</NavLink>
       </li>
       <li>
-        <NavLink to="/browseTasks">Browse Tasks</NavLink>
+        <NavLink to="/exploreProducts">Browse Tasks</NavLink>
       </li>
       <li>
         <NavLink to="/myTasks">My Posted Tasks</NavLink>
@@ -26,11 +26,11 @@ const Navbar = () => {
   );
 
   const handleLogout = () => {
-    // logOutUser()
-    //   .then(() => {
-    //     toast.success("Logged Out Successfully");
-    //   })
-    //   .catch((error) => console.log(error.message));
+    logOutUser()
+      .then(() => {
+        toast.success("Logged Out Successfully");
+      })
+      .catch((error) => console.log(error.message));
   };
   return (
     <div className="navbar bg-secondary shadow-sm">
@@ -71,7 +71,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
 
-      {/* <div className="navbar-end flex flex-col md:flex-row gap-4">
+      <div className="navbar-end flex flex-col md:flex-row gap-4">
         <div>
           {user ? (
             <div className={`space-x-4 flex items-center`}>
@@ -140,7 +140,7 @@ const Navbar = () => {
             </svg>
           </label>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

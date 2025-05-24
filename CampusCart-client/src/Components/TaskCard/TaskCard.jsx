@@ -3,8 +3,8 @@ import { FaStar } from "react-icons/fa";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Link } from "react-router";
 
-const TaskCard = ({ task }) => {
-  const { thumbnail, title, category, userName, budget , _id , photoURL} = task;
+const TaskCard = ({ product }) => {
+  const { thumbnail, title, category, userName, price , _id , photoURL} = product;
   return (
     <div className=" w-full rounded-lg overflow-hidden shadow-lg shadow-primary bg-white">
       {/* Image */}
@@ -44,11 +44,11 @@ const TaskCard = ({ task }) => {
               {userName}
             </span>
           </div>
-          <p className="text-sm font-semibold text-gray-800">
-            From: <span className="text-black">{budget}</span>
+          <p className="text-sm font-semibold bg-secondary text-primary p-2 rounded-2xl">
+             <span>$ {price}</span>
           </p>
         </div>
-        <Link to={`/browseTasks/${_id}`} className="btn btn-primary mt-4 btn-outline ">View Details</Link>
+        <Link to={`/exploreProducts/${_id}`} className="btn btn-primary mt-4 btn-outline ">View Details</Link>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { Helmet } from "react-helmet";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -15,6 +16,7 @@ const Register = () => {
     e.preventDefault();
     const name = e.target.name.value;
     const photo = e.target.photo.value;
+    const university = e.target.university.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -30,6 +32,17 @@ const Register = () => {
         const newUser = result.user;
         updateUserInfo({ displayName: name, photoURL: photo })
           .then(() => {
+            fetch('http://localhost:3000/users' , {
+                method:"POST",
+                headers:{
+                    'content-type':'application/json'
+                },
+                body:JSON.stringify({name , photo , email , university})
+            })
+            .then(res=>res.json())
+            .then(()=>{
+                toast.success('Registered Successfully');
+            })
             setUser({ ...newUser, displayName: name, photoURL: photo });
             navigate("/");
           })
@@ -78,6 +91,15 @@ const Register = () => {
               type="text"
               className=" input border-none bg-base-300"
               placeholder="Enter your Photo URL"
+            />
+            {/* University */}
+            <label className="label font-semibold text-xl">University</label>
+            <input
+              name="university"
+              required
+              type="text"
+              className=" input border-none bg-base-300"
+              placeholder="Enter your university name"
             />
             {/* email */}
             <label className="label font-semibold text-xl">Email</label>
