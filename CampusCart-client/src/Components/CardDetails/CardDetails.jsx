@@ -3,9 +3,12 @@ import { FaClock, FaHeart, FaMapMarkerAlt, FaUser } from "react-icons/fa";
 import { MdAttachEmail, MdEmail } from "react-icons/md";
 import { useLoaderData } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
+import ProductChat from "../Chat/ProductChat";
+import { FaComments } from "react-icons/fa";
 
 const CardDetails = () => {
   const productData = useLoaderData();
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const {
     thumbnail,
     userName,
@@ -17,6 +20,7 @@ const CardDetails = () => {
     // createdAt,
     // bids,
     _id,
+    userId, // seller's ID
   } = productData;
 
   // const localTime = new Date(createdAt).toLocaleString("en-US", {
@@ -26,6 +30,9 @@ const CardDetails = () => {
   // });
 
   // const [bidCount, setBidcount] = useState(bids);
+
+  // Get current user ID from localStorage or your auth context
+  const currentUserId = localStorage.getItem('userId'); // Adjust based on your auth implementation
 
   const handleCountBid = (id) => {
     // let convertedBidCount = parseInt(bidCount);
@@ -109,13 +116,32 @@ const CardDetails = () => {
         </p>
       </div>
 
-      {/* Button */}
-      <button
-        onClick={() => handleCountBid(_id)}
-        className="w-full btn btn-outline btn-primary font-medium text-xl"
-      >
-        Buy Now
-      </button>
+      {/* Buttons */}
+      <div className="flex gap-4">
+        <button
+          onClick={() => handleCountBid(_id)}
+          className="flex-1 btn btn-outline btn-primary font-medium text-xl"
+        >
+          Buy Now
+        </button>
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="btn btn-primary font-medium text-xl flex items-center gap-2"
+        >
+          <FaComments /> Chat with Seller
+        </button>
+      </div>
+
+      {/* Chat Component */}
+      <ProductChat
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        productId={_id}
+        sellerId={userId}
+        buyerId={currentUserId}
+        currentUserId={currentUserId}
+      />
+
       <ToastContainer></ToastContainer>
     </div>
   );
