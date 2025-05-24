@@ -1,48 +1,29 @@
-import {
-    GoogleGenAI,
-    createUserContent,
-    createPartFromUri,
-} from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
-async function chatbotImage(path) {
-    const myfile = await ai.files.upload({
-    filePath: path,
-    config: { mimeType: "image/jpeg" },
-    });
-
-    const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: createUserContent([
-        createPartFromUri(myfile.uri, myfile.mimeType),
-        "Analyse this product of the image, provide a brief description and pros and cons of buying it, within 3 to 5 lines",
-    ]),
-    });
-    console.log(response.text);
-    return response.text;
-}
-
-// await chatbotImage();
-
-
-
-
+import OpenAI from 'openai';
+// const apikey = process.env.DEEPSEEK_API_KEY;
+const apikey="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";
+console.log('DEEPSEEK_API_KEY:', apikey);
+const openai = new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: apikey,
+//   defaultHeaders: {
+//     "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
+//     "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
+//   },
+});
 async function chatBot(prompt) {
-    const textPart = { text: prompt}
-    const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: createUserContent([textPart]), 
-        config: {
-        systemInstruction: "You are an assistant that helps users to find the best products for their needs. You should answer briefly and concisely",
-    },
-    });
-    console.log(response.text);
-    return response.text;
+  const completion = await openai.chat.completions.create({
+    model: "deepseek/deepseek-prover-v2:free",
+    messages: [
+      {
+        "role": "user",
+        "content": prompt
+      }
+    ],
+    
+  });
+
+  console.log(completion.choices[0].message);
+  return completion.choices[0].message;
 }
 
-// await chatBot();
-
-
-export {chatbotImage, chatBot};
-// export default chatBot;
+export {chatBot};
