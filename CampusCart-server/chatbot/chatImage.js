@@ -1,7 +1,9 @@
 import OpenAI from 'openai';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const apikey="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";
-//const apikey=process.env.IMAGE;
+
+const apikey=process.env.V2_IMAGE;
 console.log('DEEPSEEK_API_KEY:', apikey);
 
 const openai = new OpenAI({

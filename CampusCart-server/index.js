@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.get('/chatbot', async (req, res) => {
   try {
-    const response = await chatBot("What is the best product for a student in college?");
+    const response = await chatBot("What is the best product for a senior year student for his birthday?");
         res.send(response);
   } catch (error) {
     // console.error(error);
@@ -39,5 +39,5 @@ app.get('/chatbotImage', async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  console.log(`API Key: ${process.env.DEEPSEEK_API_KEY ? 'Loaded' : 'NOT loaded'}`);
+  console.log(`API Key: ${process.env.V3_DEEPSEEK ? 'Loaded' : 'NOT loaded'}`);
 });

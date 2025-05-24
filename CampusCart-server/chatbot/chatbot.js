@@ -1,13 +1,8 @@
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
-// const apikey = process.env.DEEPSEEK_API_KEY;
-//const apikey="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";
-//v2
-const apikey="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";
-//const apikey=process.env.V2;
+dotenv.config();
 
-// const apikey=process.env.DEEPSEEK_API_KEY;
-console.log('APi key: ', apikey);
+const apikey=process.env.V3_DEEPSEEK;
 
 
 const openai = new OpenAI({
@@ -27,7 +22,6 @@ async function chatBot(prompt) {
         {
         "role": "user",
         "content": prompt
-
         }
     ],
     
