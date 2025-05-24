@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const apikey=process.env.V4_IMAGE;
+const apikey=process.env.V5_IMAGE;
 console.log('DEEPSEEK_API_KEY:', apikey);
 
 const openai = new OpenAI({
