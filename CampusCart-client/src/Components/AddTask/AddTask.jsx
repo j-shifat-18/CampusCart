@@ -1,15 +1,16 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Helmet } from "react-helmet";
 import { toast, ToastContainer } from "react-toastify";
-
+import Map from "../Map/Map";
 
 const AddTask = () => {
-
   const { user } = use(AuthContext);
+  const [location, setLocation] = useState(null);
 
-
-
+  const handleLocationSelect = (coords) => {
+    setLocation(coords);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +19,15 @@ const AddTask = () => {
     const title = form.title.value;
     const category = form.category.value;
     const description = form.description.value;
-    const thumbnail=form.thumbnail.value;
-    const visibility=form.visibility.value;
-    const payment=form.payment.value;
+    const thumbnail = form.thumbnail.value;
+    const visibility = form.visibility.value;
+    const payment = form.payment.value;
     const price = form.price.value;
+
+    if (!location) {
+      toast.error("Please select a location on the map");
+      return;
+    }
 
     const userData = {
       title,
@@ -34,7 +40,10 @@ const AddTask = () => {
       userEmail: user.email,
       userName: user.displayName,
       photoURL: user.photoURL,
-      
+      location: {
+        latitude: location.latitude,
+        longitude: location.longitude
+      }
     };
 
     // add task to the db
@@ -47,14 +56,13 @@ const AddTask = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.insertedId){
-            toast.success("Product added successfully")
+        if (data.insertedId) {
+          toast.success("Product added successfully");
+          setLocation(null);
         }
-        
       });
-
-    
   };
+
   return (
     <div className="min-h-screen p-6 bg-base-200 flex items-center justify-center pb-28">
       <Helmet>
@@ -65,7 +73,7 @@ const AddTask = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Sell Your Stuff </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-           <div>
+          <div>
             <label className="block font-semibold">Category</label>
             <select
               name="category"
@@ -105,7 +113,7 @@ const AddTask = () => {
             ></textarea>
           </div>
 
-          
+
 
 
           <div>
@@ -146,7 +154,7 @@ const AddTask = () => {
             />
           </div>
 
-           <div>
+          <div>
             <label className="block font-semibold">Visibility</label>
             <select
               name="visibility"
@@ -160,6 +168,20 @@ const AddTask = () => {
               <option value="All registered Student">All registered Student</option>
             </select>
           </div>
+
+          <label className="block font-semibold">Select Location</label>
+          <div className="w-full mx-auto  object-cover mb-4">
+            <Map onLocationSelect={handleLocationSelect} />
+          </div>
+          {location && (
+            
+            <p className="text-sm text-gray-600 mt-2">
+              <label className="block font-semibold">Selected Location</label>
+              <input name="latitude" type="text" value={location.latitude.toFixed(6)} />
+              <input name="longitude" type="text" value={location.longitude.toFixed(6)} />
+              {/* Selected Location: {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)} */}
+            </p>
+          )}
 
           <div>
             <label className="block font-semibold">Your Name</label>

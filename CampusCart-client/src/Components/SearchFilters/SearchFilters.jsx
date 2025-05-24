@@ -4,9 +4,10 @@ import './SearchFilters.css';
 const SearchFilters = ({ filters, onFilterChange }) => {
   const categories = [
     'All',
-    'Books',
+    'Book',
     'Electronics',
     'Accessories',
+    'Stationery',
     'Other'
   ];
 
