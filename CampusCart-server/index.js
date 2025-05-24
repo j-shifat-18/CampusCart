@@ -282,16 +282,6 @@ async function run() {
       }
     });
 
-    app.get('/chatbotImage', async (req, res) => {
-      try {
-        const response = await chatBot("https://d1lfxha3ugu3d4.cloudfront.net/assets/system-images/made/assets/system-images/remote/https_d1lfxha3ugu3d4.cloudfront.net/exhibitions/images/2015_Sneaker_Culture_1._AJ_1_from_Nike_4000W.jpg_600_400.jpg", "Suggest me some similar products");
-        res.send(response);
-      } catch (error) {
-        console.error(error);
-        res.status(500).send('Error occurred');
-      }
-    });
-
     // Rating and Review endpoints
     app.post("/reviews", async (req, res) => {
       try {
