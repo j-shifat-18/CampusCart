@@ -10,14 +10,29 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
+    "@egjs/react-flicking": "^4.13.0",
+    "@tailwindcss/vite": "^4.1.7",
+    "firebase": "^11.8.1",
+    "lottie-react": "^2.4.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^5.5.0",
+    "react-lottie": "^1.2.10",
+    "react-router": "^7.6.0",
+    "react-toastify": "^11.0.5",
+    "react-tooltip": "^5.28.1",
+    "sweetalert2": "^11.21.2",
+    "swiper": "^11.2.8",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "daisyui": "^5.0.37",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",

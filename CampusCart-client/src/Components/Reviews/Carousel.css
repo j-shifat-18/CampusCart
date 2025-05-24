@@ -1,0 +1,39 @@
+.flicking-viewport {
+  padding-bottom: 3rem !important;
+}
+
+.card-panel {
+  position: relative;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: flex-start; */
+  /* justify-content: flex-end; */
+  /* border: 2px solid rgba(141, 33, 168, 0.1); */
+  border-radius: 0.5rem;
+  /* box-shadow: 0 0.5em 1em -0.125em rgb(97, 73, 111 , 0.1); */
+  max-width: 100%;
+  /* font-size: 3rem; */
+  margin: 0.5rem;
+  width: 50%;
+  height: 350px;
+  padding: 30px 30px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.flicking-index {
+  /* position: relative;
+  min-width: 60px;
+  text-align: center; */
+}
+
+.flicking-index::after {
+  /* position: absolute;
+  
+  font-weight: bold;
+  left: 0;
+  bottom: -1.2rem;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem; */
+}
