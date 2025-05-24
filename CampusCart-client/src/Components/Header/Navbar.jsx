@@ -5,7 +5,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
 import logo from "../../assets/logo.png";
-
+import AdminPanel from "../AdminPanel/AdminPanel";
 const Navbar = () => {
   const { user, logOutUser } = use(AuthContext);
   const links = (
@@ -68,13 +68,30 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal px-1">
+          {links}
+          {/* Admin Panel button for admin users */}
+          {user && user.email === "admin@admin.com" && (
+            <li>
+              <NavLink to="/adminPanel">Admin Panel</NavLink>
+            </li>
+          )}
+        </ul>
       </div>
 
       <div className="navbar-end flex flex-col md:flex-row gap-4">
         <div>
           {user ? (
             <div className={`space-x-4 flex items-center`}>
+              {/* Admin Panel button for admin users (mobile view) */}
+              {user.email === "admin@admin.com" && (
+                <Link
+                  to="/adminPanel"
+                  className="btn btn-outline btn-primary"
+                >
+                  Admin Panel
+                </Link>
+              )}
               <div className="relative">
                 <img
                   data-tooltip-id="my-tooltip"
