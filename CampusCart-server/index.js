@@ -37,7 +37,7 @@ const client = new MongoClient(uri, {
 // Chat routes
 app.use('/chats', chatRoutes);
 
-async function run() {
+async function run(){
   try {
     await client.connect();
     const usersCollection = client.db("campusCart").collection("users");
@@ -337,21 +337,6 @@ async function run() {
       }
     });
 
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-app.post("/chatbot", async (req, res) => {
-  try {
-    const { message } = req.body;
-    if (!message) {
-      return res.status(400).send("Message is required");
-    }
-    const response = await chatBot(message);
-    res.json(response);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error occurred");
     // Rating and Review endpoints
     app.post("/reviews", async (req, res) => {
       try {
@@ -524,10 +509,10 @@ app.post("/chatbot", async (req, res) => {
     console.log("Successfully connected to MongoDB!");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-
   }
 }
 
+run().catch(console.dir);
 
 app.get("/chatbotImage", async (req, res) => {
   try {
@@ -537,16 +522,13 @@ app.get("/chatbotImage", async (req, res) => {
     );
     res.send(response);
   } catch (error) {
-    // console.error(error);
     console.error(error);
     res.status(500).send("Error occurred");
   }
-
-run().catch(console.dir);
+});
 
 app.get("/", (req, res) => {
   res.send("CampusCart API is running!");
-
 });
 
 app.listen(port, () => {
