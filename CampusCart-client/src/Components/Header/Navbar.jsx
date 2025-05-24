@@ -17,7 +17,7 @@ const Navbar = () => {
         <NavLink to="/addListing">Add Listing</NavLink>
       </li>
       <li>
-        <NavLink to="/exploreProducts">Browse Tasks</NavLink>
+        <NavLink to="/exploreProducts">Browse Products</NavLink>
       </li>
       <li>
         <NavLink to="/myTasks">My Posted Tasks</NavLink>
@@ -32,6 +32,12 @@ const Navbar = () => {
       })
       .catch((error) => console.log(error.message));
   };
+
+  const handleUpdateProfile =()=>{
+
+  }
+
+
   return (
     <div className="navbar bg-secondary shadow-sm">
       <div className="navbar-start">
@@ -83,16 +89,7 @@ const Navbar = () => {
         <div>
           {user ? (
             <div className={`space-x-4 flex items-center`}>
-              {/* Admin Panel button for admin users (mobile view) */}
-              {user.email === "admin@admin.com" && (
-                <Link
-                  to="/adminPanel"
-                  className="btn btn-outline btn-primary"
-                >
-                  Admin Panel
-                </Link>
-              )}
-              <div className="relative">
+              <Link to="/updateProfile"  className="relative">
                 <img
                   data-tooltip-id="my-tooltip"
                   data-tooltip-content={user.displayName}
@@ -101,7 +98,7 @@ const Navbar = () => {
                   src={user.photoURL}
                   alt=""
                 />
-              </div>
+              </Link>
               <Tooltip id="my-tooltip" style={{ backgroundColor: "#6A5ACD" , borderRadius:'8px'}} />
               <button
                 onClick={handleLogout}

@@ -51,6 +51,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/updateProfile",
+        element: (
+          <PrivateRoute>
+            <UpdateUserProfile></UpdateUserProfile>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/myTasks",
         // loader: () => fetch("https://freelancing-marketplace-server.vercel.app/tasks"),
         // hydrateFallbackElement: <Loading></Loading>,
