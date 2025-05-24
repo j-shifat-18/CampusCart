@@ -129,14 +129,14 @@ const Chatbot = () => {
       {/* Floating Chatbot Icon */}
       <div
         onClick={() => setIsOpen(true)}
-        className='fixed bottom-10 right-2 bg-violet-300 p-2 rounded-full cursor-pointer shadow-lg z-50 hover:bg-violet-400 transition-colors'
+        className='fixed bottom-10 right-2 bg-violet-300 p-2 rounded-full cursor-pointer shadow-lg shadow-purple-400 z-50 hover:bg-violet-400 transition-colors'
       >
         <RiChatSmileAiFill size={40} color='#6A5ACD' />
       </div>
 
       {/* Custom Right-Side Modal */}
       {isOpen && (
-        <div className="fixed right-4 top-3/5 -translate-y-1/2 w-96 h-[500px] bg-white z-40 shadow-2xl rounded-2xl flex flex-col">
+        <div className="fixed right-4 top-2/4 -translate-y-1/2 w-96 h-[400px] bg-white z-40 shadow-2xl rounded-2xl flex flex-col">
           <div className="p-4 flex justify-between items-center bg-primary rounded-t-2xl">
             <h3 className="font-bold text-lg text-white">Campus Cart Assistant</h3>
             <button

@@ -12,6 +12,7 @@ import CardDetails from "../Components/CardDetails/CardDetails";
 import UpdateTask from "../Components/UpdateTask/UpdateTask";
 import Loading from "../Components/Loading/Loading";
 import UpdateUserProfile from "../Components/UpdateUserInfo/UpdateUserInfo";
+import AdminPanel from "../Components/AdminPanel/AdminPanel";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ export const router = createBrowserRouter([
             <AddTask></AddTask>
           </PrivateRoute>
         ),
+      },
+      {
+        path:'/adminPanel',
+        loader:()=>fetch('http://localhost:3000/users'),
+        element:<AdminPanel></AdminPanel>
       },
       {
         path: "/exploreProducts",
@@ -59,9 +65,9 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/myTasks",
-        // loader: () => fetch("https://freelancing-marketplace-server.vercel.app/tasks"),
-        // hydrateFallbackElement: <Loading></Loading>,
+        path: "/myProducts",
+        loader: () => fetch("http://localhost:3000/products"),
+        hydrateFallbackElement: <Loading></Loading>,
         element: (
           <PrivateRoute>
             <MyTasks></MyTasks>
@@ -69,10 +75,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/updateTask/:id",
-        // loader: ({ params }) =>
-        //   fetch(`https://freelancing-marketplace-server.vercel.app/updateTask/${params.id}`),
-        // hydrateFallbackElement: <Loading></Loading>,
+        path: "/updateProduct/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
+        hydrateFallbackElement: <Loading></Loading>,
         element: <UpdateTask></UpdateTask>,
       },
       {

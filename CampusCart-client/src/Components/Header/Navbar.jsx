@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router";
 import "./Navbar.css";
 import { AuthContext } from "../../Providers/AuthProvider";
@@ -6,8 +6,24 @@ import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
 import logo from "../../assets/logo.png";
 import AdminPanel from "../AdminPanel/AdminPanel";
+import Loading from "../Loading/Loading";
 const Navbar = () => {
-  const { user, logOutUser } = use(AuthContext);
+  const { user, logOutUser, loading } = use(AuthContext);
+
+  let admin = false;
+
+  console.log(user);
+
+  if (
+    user?.email == "sifatjahirul@gmial.com" ||
+    user?.email == "muhaiminulhasan@gmai.com" ||
+    user?.email == "safwansatil@gmail.com"
+  ) {
+    admin = true;
+  }
+
+  // if (loading) return <Loading></Loading>;
+
   const links = (
     <>
       <li>
@@ -20,8 +36,13 @@ const Navbar = () => {
         <NavLink to="/exploreProducts">Browse Products</NavLink>
       </li>
       <li>
-        <NavLink to="/myTasks">My Posted Tasks</NavLink>
+        <NavLink to="/myProducts">My Posted Products</NavLink>
       </li>
+      {admin && (
+        <li>
+          <NavLink to="/adminPanel">Admin Panel</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -32,9 +53,6 @@ const Navbar = () => {
       })
       .catch((error) => console.log(error.message));
   };
-
-  
-
 
   return (
     <div className="navbar bg-secondary shadow-sm">
@@ -67,7 +85,7 @@ const Navbar = () => {
         <div className="flex items-center ">
           <img src={logo} alt="" />
           <a className="text-3xl font-bold ml-4">
-            Work<span className=" text-primary">lify</span>
+            Campus<span className=" text-primary">Cart</span>
           </a>
         </div>
       </div>
@@ -75,11 +93,11 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">
           {links}
           {/* Admin Panel button for admin users */}
-          {user && user.email === "admin@admin.com" && (
+          {/* {user && user.email === "admin@admin.com" && (
             <li>
               <NavLink to="/adminPanel">Admin Panel</NavLink>
             </li>
-          )}
+          )} */}
         </ul>
       </div>
 
@@ -87,7 +105,7 @@ const Navbar = () => {
         <div>
           {user ? (
             <div className={`space-x-4 flex items-center`}>
-              <Link to="/updateProfile"  className="relative">
+              <Link to="/updateProfile" className="relative">
                 <img
                   data-tooltip-id="my-tooltip"
                   data-tooltip-content={user.displayName}
@@ -97,7 +115,10 @@ const Navbar = () => {
                   alt=""
                 />
               </Link>
-              <Tooltip id="my-tooltip" style={{ backgroundColor: "#6A5ACD" , borderRadius:'8px'}} />
+              <Tooltip
+                id="my-tooltip"
+                style={{ backgroundColor: "#6A5ACD", borderRadius: "8px" }}
+              />
               <button
                 onClick={handleLogout}
                 className="btn btn-outline btn-primary"

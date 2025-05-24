@@ -32,17 +32,17 @@ const Register = () => {
         const newUser = result.user;
         updateUserInfo({ displayName: name, photoURL: photo })
           .then(() => {
-            fetch('http://localhost:3000/users' , {
-                method:"POST",
-                headers:{
-                    'content-type':'application/json'
-                },
-                body:JSON.stringify({name , photo , email , university})
+            fetch("http://localhost:3000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({ name, photo, email, university , isAdmin:false }),
             })
-            .then(res=>res.json())
-            .then(()=>{
-                toast.success('Registered Successfully');
-            })
+              .then((res) => res.json())
+              .then(() => {
+                toast.success("Registered Successfully");
+              });
             setUser({ ...newUser, displayName: name, photoURL: photo });
             navigate("/");
           })
@@ -93,14 +93,32 @@ const Register = () => {
               placeholder="Enter your Photo URL"
             />
             {/* University */}
-            <label className="label font-semibold text-xl">University</label>
+            <div>
+              <label className="label font-semibold text-xl">university</label>
+              <select
+                name="university"
+                required
+                className="input border-none bg-base-300"
+              >
+                <option value="">Select a Option</option>
+                <option value="Islamic University of Technology">
+                  Islamic University of Technology
+                </option>
+                <option value="Dhaka University">Dhaka University</option>
+                <option value="BUET">BUET</option>
+                <option value="DMC">DMC</option>
+                <option value="AUST">AUST</option>
+              </select>
+            </div>
+
+            {/* <label className="label font-semibold text-xl">university</label>
             <input
               name="university"
               required
               type="text"
               className=" input border-none bg-base-300"
               placeholder="Enter your university name"
-            />
+            /> */}
             {/* email */}
             <label className="label font-semibold text-xl">Email</label>
             <input
@@ -125,9 +143,11 @@ const Register = () => {
                 onClick={() => setShowPass(!showPass)}
                 className="btn btn-xs absolute top-2 right-6 bg-transparent border-none"
               >
-                {
-                  showPass ? <FaEyeSlash size={20}></FaEyeSlash> :<FaEye size={20}></FaEye>
-                }
+                {showPass ? (
+                  <FaEyeSlash size={20}></FaEyeSlash>
+                ) : (
+                  <FaEye size={20}></FaEye>
+                )}
               </p>
             </div>
             {/* <div className="flex gap-2 items-center">

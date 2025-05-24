@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="flex items-center ">
             <img src={logo} alt="" />
             <a className="text-3xl font-bold ml-4">
-              Work<span className=" text-primary">lify</span>
+              Campus<span className=" text-primary">Cart</span>
             </a>
           </div>
           <p className="text-lg text-slate-700 font-medium">Lets Head Into The Future</p>
