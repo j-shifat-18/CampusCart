@@ -7,7 +7,7 @@ const SearchFilters = ({ filters, onFilterChange }) => {
     'Book',
     'Electronics',
     'Accessories',
-    'Stationery',
+    'Stationary',
     'Other'
   ];
 

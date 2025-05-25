@@ -27,8 +27,10 @@ const AddTask = () => {
     const visibility = form.visibility.value;
 
     const pricing = form.pricing.value;
+    const latitude = form.latitude.value;
+    const longitude = form.longitude.value;
 
-    const payment = form.payment.value;
+    // const payment = form.payment.value;
 
     const price = form.price.value;
     const university = form.university.value;
@@ -47,6 +49,8 @@ const AddTask = () => {
       visibility,
       pricing,
       university,
+      latitude,
+      longitude,
       userEmail: user.email,
       userName: user.displayName,
       photoURL: user.photoURL,
@@ -208,8 +212,8 @@ const AddTask = () => {
             
             <p className="text-sm text-gray-600 mt-2">
               <label className="block font-semibold">Selected Location</label>
-              <input name="latitude" type="text" value={location.latitude.toFixed(6)} />
-              <input name="longitude" type="text" value={location.longitude.toFixed(6)} />
+              <input name="latitude" readOnly type="text" value={location.latitude.toFixed(6)} />
+              <input name="longitude" readOnly type="text" value={location.longitude.toFixed(6)} />
               {/* Selected Location: {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)} */}
             </p>
           )}
