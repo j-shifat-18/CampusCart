@@ -12,7 +12,7 @@ const ChatList = ({ currentUserId, onSelectChat }) => {
 
     const fetchChats = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/chats/${currentUserId}`);
+            const response = await fetch(`https://campus-cart-server.vercel.app/chats/${currentUserId}`);
             const data = await response.json();
             setChats(data);
         } catch (error) {

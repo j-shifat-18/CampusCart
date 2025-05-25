@@ -42,7 +42,7 @@ app.use("/chats", chatRoutes);
 
 async function run(){
   try {
-    await client.connect();
+    // await client.connect();
     const usersCollection = client.db("campusCart").collection("users");
     const productsCollection = client.db("campusCart").collection("products");
     const chatsCollection = client.db("campusCart").collection("chats");
@@ -66,7 +66,7 @@ async function run(){
       const email = req.params.email;
       const query = { email: email };
       const result = await usersCollection.findOne(query);
-      console.log(result);
+      // console.log(result);
       res.json(result);
     });
 
@@ -520,7 +520,7 @@ async function run(){
       }
     });
 
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("Successfully connected to MongoDB!");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);

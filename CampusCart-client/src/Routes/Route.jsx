@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: () => fetch("http://localhost:3000/products/featuredProducts"),
+        loader: () => fetch("https://campus-cart-server.vercel.app/products/featuredProducts"),
         hydrateFallbackElement: <Loading></Loading>,
         element: <Home></Home>,
       },
@@ -36,19 +36,19 @@ export const router = createBrowserRouter([
       },
       {
         path:'/adminPanel',
-        loader:()=>fetch('http://localhost:3000/users'),
+        loader:()=>fetch('https://campus-cart-server.vercel.app/users'),
         element:<AdminPanel></AdminPanel>
       },
       {
         path: "/exploreProducts",
-        loader: () => fetch("http://localhost:3000/products"),
+        loader: () => fetch("https://campus-cart-server.vercel.app/products"),
         hydrateFallbackElement: <Loading></Loading>,
         element: <BrowseTasks></BrowseTasks>,
       },
       {
         path: "/exploreProducts/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/products/${params.id}`),
+          fetch(`https://campus-cart-server.vercel.app/products/${params.id}`),
         hydrateFallbackElement: <Loading></Loading>,
         element: (
           <PrivateRoute>
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/myProducts",
-        loader: () => fetch("http://localhost:3000/products"),
+        loader: () => fetch("https://campus-cart-server.vercel.app/products"),
         hydrateFallbackElement: <Loading></Loading>,
         element: (
           <PrivateRoute>
@@ -77,7 +77,7 @@ export const router = createBrowserRouter([
       {
         path: "/updateProduct/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/products/${params.id}`),
+          fetch(`https://campus-cart-server.vercel.app/products/${params.id}`),
         hydrateFallbackElement: <Loading></Loading>,
         element: <UpdateTask></UpdateTask>,
       },

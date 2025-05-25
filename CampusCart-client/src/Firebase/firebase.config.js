@@ -5,16 +5,15 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAgApGhF0oL03Vn7YSAh-KVdlvMiayHzAA",
-  authDomain: "campus-cart-d429a.firebaseapp.com",
-  projectId: "campus-cart-d429a",
-  storageBucket: "campus-cart-d429a.firebasestorage.app",
-  messagingSenderId: "898213786231",
-  appId: "1:898213786231:web:6d0951094303120a97cc72"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
 
-// 14HcYjRNNXp35LgQ0HqC

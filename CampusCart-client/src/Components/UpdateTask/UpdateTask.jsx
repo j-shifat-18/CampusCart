@@ -47,7 +47,7 @@ const UpdateTask = () => {
     };
 
     fetch(
-      `http://localhost:3000/updateProduct/${_id}`,
+      `https://campus-cart-server.vercel.app/updateProduct/${_id}`,
       {
         method: "PATCH",
         headers: {

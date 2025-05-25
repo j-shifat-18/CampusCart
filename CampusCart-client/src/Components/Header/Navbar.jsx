@@ -10,7 +10,7 @@ const Navbar = () => {
 
   let admin = false;
 
-  console.log(user);
+  // console.log(user);
 
   if (
     user?.email == "sifatjahirul23@iut-dhaka.edu" ||

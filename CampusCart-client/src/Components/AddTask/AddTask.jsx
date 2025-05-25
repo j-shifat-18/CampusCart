@@ -63,7 +63,7 @@ const AddTask = () => {
     };
 
     // add task to the db
-    fetch("http://localhost:3000/products", {
+    fetch("https://campus-cart-server.vercel.app/products", {
       method: "POST",
       headers: {
         "content-type": "application/json",

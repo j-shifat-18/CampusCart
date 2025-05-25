@@ -54,7 +54,7 @@ const Chatbot = () => {
       let response;
       if (imageUrl) {
         // Handle image-based chat
-        response = await fetch('http://localhost:3000/chats/image', {
+        response = await fetch('https://campus-cart-server.vercel.app/chats/image', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const Chatbot = () => {
         }]);
       } else {
         // Handle text-based chat
-        response = await fetch('http://localhost:3000/chatbot', {
+        response = await fetch('https://campus-cart-server.vercel.app/chatbot', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

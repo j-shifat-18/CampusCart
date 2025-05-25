@@ -26,7 +26,7 @@ const ProductChat = ({ isOpen, onClose, productId, sellerId, buyerId, currentUse
 
     const initializeChat = async () => {
         try {
-            const response = await fetch('http://localhost:3000/chats', {
+            const response = await fetch('https://campus-cart-server.vercel.app/chats', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const ProductChat = ({ isOpen, onClose, productId, sellerId, buyerId, currentUse
         if (!chatId) return;
 
         try {
-            const response = await fetch(`http://localhost:3000/chats/${chatId}/messages`);
+            const response = await fetch(`https://campus-cart-server.vercel.app/chats/${chatId}/messages`);
             const data = await response.json();
             setMessages(data);
         } catch (error) {
@@ -67,7 +67,7 @@ const ProductChat = ({ isOpen, onClose, productId, sellerId, buyerId, currentUse
         setIsLoading(true);
 
         try {
-            const response = await fetch(`http://localhost:3000/chats/${chatId}/messages`, {
+            const response = await fetch(`https://campus-cart-server.vercel.app/chats/${chatId}/messages`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

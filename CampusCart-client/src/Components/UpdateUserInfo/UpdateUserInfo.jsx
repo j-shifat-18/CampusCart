@@ -14,7 +14,7 @@ const UpdateUserProfile = () => {
       if (!user?.email) return;
 
       try {
-        const res = await fetch(`http://localhost:3000/users/${user.email}`);
+        const res = await fetch(`https://campus-cart-server.vercel.app/users/${user.email}`);
         if (!res.ok) {
           throw new Error("Failed to fetch user ID");
         }
@@ -68,7 +68,7 @@ const UpdateUserProfile = () => {
         photoURL: photo,
       }));
 
-      fetch(`http://localhost:3000/updateprofile/${userId}`, {
+      fetch(`https://campus-cart-server.vercel.app/updateprofile/${userId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -76,7 +76,7 @@ const UpdateUserProfile = () => {
         body: JSON.stringify(updatedInfo),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => console.log('hello'));
 
       // toast.success("Profile updated successfully!");
       // navigate("/");
