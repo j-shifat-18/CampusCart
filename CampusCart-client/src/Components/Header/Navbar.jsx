@@ -13,9 +13,9 @@ const Navbar = () => {
   console.log(user);
 
   if (
-    user?.email == "sifatjahirul2@gmial.edu" ||
-    user?.email == "muhaiminulhasan2@gmail.edu" ||
-    user?.email == "safwansatil2@gmail.edu"
+    user?.email == "sifatjahirul23@iut-dhaka.edu" ||
+    user?.email == "muhaiminulhasan23@iut-dhaka.edu" ||
+    user?.email == "safwansatil23@iut-dhaka.edu"
   ) {
     admin = true;
   }
